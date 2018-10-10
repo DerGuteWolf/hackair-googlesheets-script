@@ -14,7 +14,7 @@ function updateSheets() {
       var csvData = Utilities.parseCsv(csvContent);
       csvData.shift();
       if (csvData.length !== 0) {
-        csvData = csvData.map(function(row){return [row[2], row[3],row[4].replace('.',',')];}); // assumes spreadsheet language with decimal "," (eg german)
+        csvData = csvData.map(function(row){return [row[2], row[3],row[4]];}); // add .replace('.',',') after [4] if spreadsheet language has "," as the decimal sign (eg german)
         for(var i = 0; i < csvData.length/2; i++) {
           csvData[i] = [csvData[i*2][0],csvData[i*2][2],csvData[(i*2)+1][2]];
         }
