@@ -20,6 +20,7 @@ function updateSheets() {
         }
         csvData = csvData.slice(0,csvData.length/2);
         csvData.forEach(function(row, index) { // substitute 'nan' with previous value
+          row[0] = row[0].substr(0, 19);
           if (index === 0)
             return;
           if (row[1] === 'nan')
@@ -28,7 +29,7 @@ function updateSheets() {
             csvData[index][2] = csvData[index-1][2];          
         });
         csvData = csvData.filter(function(row) {
-          return row[1] !== 'nan' && row[2] !== 'nan' && parseInt(row[1]) < 100 && parseInt(row[2]) < 100 && (!lastDate || Moment.moment(row[0]).isAfter(lastDate));
+          return row[1] !== 'nan' && row[2] !== 'nan' && parseInt(row[1]) < 100 && parseInt(row[2]) < 100 && (!lastDate || Moment.moment.utc(row[0], 'YYYY-MM-DD HH:mm:ss').isAfter(lastDate));
         }); // remove erroneous and already existing entries
         if (csvData.length !== 0) {
           sheet.getRange(pos, 1, csvData.length, csvData[0].length).setValues(csvData);
